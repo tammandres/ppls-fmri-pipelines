@@ -757,20 +757,14 @@ parfor i = 1:nsub
             % Message
             disp([subj ': Adding TR to NIfTI header of preprocessed image number:' ' ' num2str(j)])
 
-            % Read the header and data matrix of the NIfTI image
-            h  = niftiinfo(imgfiles{j});
-            v  = niftiread(h);
-            
-            % Add TR (the 4th pixel dimension)
-            h.PixelDimensions(4) = TR;
-            
-            % Write the image with updated header into a temporary file
-            % This is to avoid any issues with opening and writing to the
-            % same image that can happen, for example, when using NiBabel
-            niftiwrite(v, 'tmp.nii', h);
-            
-            % Replace the original image with the temporary file
-            movefile('tmp.nii', imgfiles{j});
+            % Read in the header, modify TR, save
+            % Suggested by Guillaume on NeuroStars
+            % https://neurostars.org/t/info-spm12s-slicetiming-sets-tr-value-in-the-nifti-header-to-zero/2698/2
+            N = [];
+            N = nifti(imgfiles{j});
+            N.timing.toffset = 0;
+            N.timing.tspace  = TR;
+            create(N);
         end
     end
 
