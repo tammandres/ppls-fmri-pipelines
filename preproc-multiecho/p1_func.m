@@ -66,7 +66,7 @@
 %
 % Author(s) : Andres Tamm (The University of Edinburgh), using functions from SPM12; 
 %             motion plot legend code is based on snippets from SPM functions
-% Software  : MATLAB R2018b, SPM12 v7219
+% Software  : MATLAB R2018a, SPM12 v7487
 %---------------------------------
 
 %% Input - make changes here to run the script on another machine

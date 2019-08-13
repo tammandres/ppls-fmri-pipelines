@@ -69,7 +69,7 @@
 %    https://bids-specification.readthedocs.io/en/stable/
 %
 % Author   : Andres Tamm
-% Software : MATLAB R2018b, dcm2niix, SPM12 v7219
+% Software : MATLAB R2018b, dcm2niix, SPM12 v7487
 %--------------------------------- 
 
 %% Clear variables

@@ -27,7 +27,7 @@
 %    This is accomplished using SPM's apply VDM tool.
 %
 % Author   : Andres Tamm
-% Software : MATLAB R2018b, SPM12 v7219
+% Software : MATLAB R2018a, SPM12 v7487
 %---------------------------------
 
 %% Input - make changes here to run the script on another machine

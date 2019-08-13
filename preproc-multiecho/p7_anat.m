@@ -26,7 +26,7 @@
 %    number of Gaussians set to 2
 %
 % Author   : Andres Tamm
-% Software : MATLAB R2018b
+% Software : MATLAB R2018a, SPM12 v7487
 %---------------------------------
 
 %% Input - make changes here to run the script on another machine

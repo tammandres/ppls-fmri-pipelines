@@ -32,7 +32,7 @@
 %  - These settings can be changed at 'mni_norm.bb =' and 'mni_norm.vox =' lines below.
 %
 % Author   : Andres Tamm
-% Software : MATLAB R2018b, SPM12 v7219
+% Software : MATLAB R2018a, SPM12 v7487
 %---------------------------------
 
 %% Input - make changes here to run the script on another machine

@@ -14,7 +14,7 @@
 %    these paths and variables.
 %
 % Author   : Andres Tamm
-% Software : MATLAB R2018b
+% Software : MATLAB R2018a
 %---------------------------------
 
 %% Clear the workspace

@@ -257,7 +257,7 @@ This is a multi-echo fMRI preprocessing pipeline that uses Python's [TE-dependen
   `exit`
 
 ## Software requirements
-* MATLAB R2018a for all scripts except "step1_prepareImages" which was run with R2018b
+* MATLAB R2018a
 * [Statistical Parametric Mapping (SPM) 12 v7487 (MATLAB toolbox)](https://github.com/spm/spm12)
 * Python 3.5.5
 * The preprocessing scripts also use [tedana 0.0.7](https://tedana.readthedocs.io/en/latest/usage.html), [Nilearn 0.5.2](https://nilearn.github.io/index.html), and [nibabel 2.4.1](https://nipy.org/nibabel/) Python packages. These are automatically installed on the computer cluster as the scripts are run.
