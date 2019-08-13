@@ -741,8 +741,6 @@ parfor i = 1:nsub
     %---------------------
     imgfiles = [];
     TR = [];
-    h = [];
-    v = [];
     if addTR == 1
         
         % Get TR, assuming it is correctly specified in .json files
