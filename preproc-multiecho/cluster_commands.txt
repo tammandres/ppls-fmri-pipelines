@@ -1,0 +1,133 @@
+#------------------------
+# Copy files to cluster
+#------------------------
+
+# Open a terminal window and connect to the cluster.
+ssh atamm2@eddie3.ecdf.ed.ac.uk
+
+# Log in to the staging node
+qlogin -q staging -l h='node2c11'
+
+# Create your study folder and the 'derivatives' folder in the 'scratch' space.
+cd /exports/eddie/scratch/atamm2/
+mkdir -p speaklisten/derivatives
+
+# Now connect to DataStore from the cluster using sftp and port 22222:
+sftp -P 22222 atamm2@chss.datastore.ed.ac.uk
+
+# Then set paths to your study folder on the cluster (a "local" folder as you are starting sftp from the cluster), and to your study folder on DataStore (a "remote" folder as you are connecting to it).
+lcd /exports/eddie/scratch/atamm2/speaklisten/
+lls
+cd /chss/datastore/chss/groups/hsscollege-shared/ppls/morcom02/E182025_Speak-listen/
+ls
+
+# Copy the 'derivatives' folder from DataStore to the cluster:
+get -R derivatives
+
+# Use the same method to copy the 'spm12' folder to your study folder:
+cd /chss/datastore/chss/groups/hsscollege-shared/ppls/morcom02/Shared_resources
+lcd /exports/eddie/scratch/atamm2/speaklisten/
+get -R spm12_v7487
+
+# ... and to copy the 'code' folder to your study folder
+cd /chss/datastore/chss/groups/hsscollege-shared/ppls/morcom02/E182025_Speak-listen/
+lcd /exports/eddie/scratch/atamm2/speaklisten/
+get -R code
+
+# You can also use the same method to copy folders of individual subjects
+# but for that you need to set your local and remote folder as the 'derivatives' folder:
+lcd /exports/eddie/scratch/atamm2/speaklisten/derivatives
+cd /chss/datastore/chss/groups/hsscollege-shared/ppls/morcom02/E182025_Speak-listen/derivatives
+get -R sub-22
+get -R sub-23
+
+# Exit sftp and the staging node
+exit
+exit
+
+#------------------------
+# Submit to cluster
+#------------------------
+
+# Go to the terminal window where you are connected to the cluster and paste this
+# Change the resources you request if needed
+qsub -pe sharedmem 12 -l h_vmem=16G -l h_rt=86400 -e /exports/eddie/scratch/atamm2/speaklisten/derivatives/ -o /exports/eddie/scratch/atamm2/speaklisten/derivatives/ /exports/eddie/scratch/atamm2/speaklisten/code/preproc.sh
+
+# Monitor
+qstat
+
+#------------------------
+# Copy back to DataStore
+#------------------------
+
+# Open a terminal window and connect to the cluster. 
+# If you are using a saved session on MobaXterm, click on that session to achieve the same result:
+ssh atamm2@eddie3.ecdf.ed.ac.uk
+
+# Log in to the staging node
+qlogin -q staging -l h='node2c11'
+
+# Set the permission of all files to be copied back (in the "derivatives" folder) to "read, write, execute". 
+# This is to avoid potential file access issues later:
+cd /exports/eddie/scratch/atamm2/speaklisten
+chmod 777 -R -v derivatives
+
+# Connect to DataStore from the cluster using sftp and port 22222:
+sftp -P 22222 atamm2@chss.datastore.ed.ac.uk
+
+# Set paths to your study folder on the cluster (a "local" folder), and to your study folder on DataStore (a "remote" folder)
+lcd /exports/eddie/scratch/atamm2/speaklisten/
+lls
+cd /chss/datastore/chss/groups/hsscollege-shared/ppls/morcom02/E182025_Speak-listen/
+ls
+
+# Copy the 'derivatives' folder from cluster to DataStore. 
+# The difference from copying files back to DataStore from copying files to the cluster is the put command instead of get:
+put -R derivatives
+
+# You can use the same method to copy folders of individual subjects:
+lcd /exports/eddie/scratch/atamm2/speaklisten/derivatives
+lls
+cd /chss/datastore/chss/groups/hsscollege-shared/ppls/morcom02/E182025_Speak-listen/tmp
+ls
+put -R sub-22
+put -R sub-23
+
+# Exit sftp and the staging node
+exit
+exit
+
+
+
+
+
+
+
+
+####### Sub-23 rerun
+
+# Open a terminal window and connect to the cluster.
+ssh atamm2@eddie3.ecdf.ed.ac.uk
+
+# Log in to the staging node
+qlogin -q staging -l h='node2c11'
+
+# Create your study folder and the 'derivatives' folder in the 'scratch' space.
+cd /exports/eddie/scratch/atamm2/
+mkdir -p speaklisten/derivatives
+
+# Now connect to DataStore from the cluster using sftp and port 22222:
+sftp -P 22222 atamm2@chss.datastore.ed.ac.uk
+
+# You can also use the same method to copy folders of individual subjects
+# but for that you need to set your local and remote folder as the 'derivatives' folder:
+lcd /exports/eddie/scratch/atamm2/speaklisten/derivatives
+cd /chss/datastore/chss/groups/hsscollege-shared/ppls/morcom02/E182025_Speak-listen/BIDS
+chmod 777 .
+chmod 777 ./*
+chmod 777 ./*/*
+chmod 777 ./*/*/*
+chmod 777 ./*/*/*/*
+get -R sub-23
+
+
