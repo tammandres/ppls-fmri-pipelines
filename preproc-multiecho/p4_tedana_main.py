@@ -14,7 +14,7 @@
 #
 # Main outputs
 #  - Optimal combination of echos and denoised optimal combination
-#    in 'sub-[X]/func/tedana_run-[X]' folder, named as 'ts_OC.nii' 
+#    in 'sub-[X]/func/tedana_task-[X]_run-[X]' folder, named as 'ts_OC.nii' 
 #    and 'dn_ts_OC.nii', respectively
 #  - Diagnostic plots in 'sub-[X]/func/tedana_run-[X]/figures' folder
 # 
