@@ -103,7 +103,8 @@ nsub = len(subj_list)
 
 # Loop over subjects to create tedana calls
 # To test the loop, type j = 0
-tedcall = [""]*nsub
+#tedcall = [""]*nsub
+tedcall = []
 for j in range(0, nsub):
     
     # Subject ID
@@ -186,10 +187,11 @@ for j in range(0, nsub):
         t[i] = s  
     
     # Store the subject's tedana calls
-    tedcall[j] = t
+    #tedcall[j] = t
+    tedcall = tedcall + t
 
 # Gather the tedana calls of all subjects in the same level of the array
-tedcall = np.ravel(tedcall)   
+#tedcall = np.ravel(tedcall)   
 ncall = len(tedcall)
 print("Total number of tedana calls for these subjects is: " + str(ncall))
 
