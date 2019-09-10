@@ -98,36 +98,3 @@ exit
 exit
 
 
-
-
-
-
-
-
-####### Sub-23 rerun
-
-# Open a terminal window and connect to the cluster.
-ssh atamm2@eddie3.ecdf.ed.ac.uk
-
-# Log in to the staging node
-qlogin -q staging -l h='node2c11'
-
-# Create your study folder and the 'derivatives' folder in the 'scratch' space.
-cd /exports/eddie/scratch/atamm2/
-mkdir -p speaklisten/derivatives
-
-# Now connect to DataStore from the cluster using sftp and port 22222:
-sftp -P 22222 atamm2@chss.datastore.ed.ac.uk
-
-# You can also use the same method to copy folders of individual subjects
-# but for that you need to set your local and remote folder as the 'derivatives' folder:
-lcd /exports/eddie/scratch/atamm2/speaklisten/derivatives
-cd /chss/datastore/chss/groups/hsscollege-shared/ppls/morcom02/E182025_Speak-listen/BIDS
-chmod 777 .
-chmod 777 ./*
-chmod 777 ./*/*
-chmod 777 ./*/*/*
-chmod 777 ./*/*/*/*
-get -R sub-23
-
-
