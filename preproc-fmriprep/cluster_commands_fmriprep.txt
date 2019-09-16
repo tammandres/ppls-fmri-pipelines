@@ -1,0 +1,117 @@
+# Below, replace "atamm2" with your university username
+# Replace "emotion" with the name of your study folder on the cluster
+# Replace "E123456_Emotion" with the name of your study folder on DataStore or on your computer
+# Then copy paste these commands to terminal
+
+#------------------------
+# Copy files to cluster
+#------------------------
+
+# Open a terminal window and connect to the cluster.
+ssh atamm2@eddie3.ecdf.ed.ac.uk
+
+# Log in to the staging node
+qlogin -q staging -l h='node2c11'
+
+# Create your study folder and the 'derivatives' folder in the 'scratch' space.
+cd /exports/eddie/scratch/atamm2/
+mkdir -p emotion/derivatives
+
+# Now connect to DataStore from the cluster using sftp and port 22222:
+sftp -P 22222 atamm2@chss.datastore.ed.ac.uk
+
+# Then set paths to your study folder on the cluster (replace 'emotion' with the name you chose)
+# and to your study folder on DataStore (replace 'E123456_Emotion' with the correct name).
+lcd /exports/eddie/scratch/atamm2/emotion/
+lls
+cd /chss/datastore/chss/groups/hsscollege-shared/ppls/morcom02/E123456_Emotion/
+ls
+
+# Copy the 'derivatives' folder from DataStore to the cluster:
+get -R derivatives
+
+# ... and to copy the 'code' folder to your study folder
+cd /chss/datastore/chss/groups/hsscollege-shared/ppls/morcom02/E123456_Emotion/
+lcd /exports/eddie/scratch/atamm2/emotion/
+get -R code
+
+# You can also use the same method to copy folders of individual subjects
+# but for that you need to set your local and remote folder as the 'derivatives' folder:
+lcd /exports/eddie/scratch/atamm2/emotion/derivatives
+cd /chss/datastore/chss/groups/hsscollege-shared/ppls/morcom02/E123456_Emotion/derivatives
+get -R sub-01
+get -R sub-02
+
+# Exit sftp and the staging node
+exit
+exit
+
+#------------------------
+# Submit scripts to the cluster
+#------------------------
+
+# In all commands below, change the resources you request if needed
+#  -t 1-5 : for array jobs; specifies that subjects 1-5 should be processed (see README_fmriprep file for precise meaning)
+#  -tc 26 : for array jobs; specifies that 26 subjects at maximum can be run in parallel
+#  -l h_rt=08:00:00           : 8 hours of processing time are requested for each participant
+#  -pe sharedmem 4            : 4 computer cores are requested for processing the data of each participant
+#  -l h_vmem=16G              : 16 GB of memory per core is requested for processing the data of each participant
+#  -P psych_PPLS-fMRI-studies : the script is submitted to the priority queue (this is faster, but uses our paid cluster time)
+#  -e, -o                     : paths where to save error and output log files
+
+# Submit "fmriprep_array.sh"
+qsub -t 1-5 -tc 26 -pe sharedmem 4 -l h_vmem=16G -l h_rt=08:00:00 -P psych_PPLS-fMRI-studies -e /exports/eddie/scratch/atamm2/emotion/ -o /exports/eddie/scratch/atamm2/emotion/ /exports/eddie/scratch/atamm2/emotion/code/fmriprep_array.sh
+
+# Submit "fmriprep_array_general.sh"
+qsub -t 1-5 -tc 26 -pe sharedmem 4 -l h_vmem=16G -l h_rt=08:00:00 -P psych_PPLS-fMRI-studies -e /exports/eddie/scratch/atamm2/emotion/ -o /exports/eddie/scratch/atamm2/emotion/ /exports/eddie/scratch/atamm2/emotion/code/fmriprep_array_general.sh
+
+# Submit a script for processing a single subject
+qsub -pe sharedmem 4 -l h_vmem=16G -l h_rt=08:00:00 -P psych_PPLS-fMRI-studies -e /exports/eddie/scratch/atamm2/emotion/ -o /exports/eddie/scratch/atamm2/emotion/ /exports/eddie/scratch/atamm2/emotion/code/fmriprep_sub01.sh
+
+# Monitor
+qstat
+
+#------------------------
+# Copy back to DataStore
+#------------------------
+
+# Open a terminal window and connect to the cluster. 
+# If you are using a saved session on MobaXterm, click on that session to achieve the same result:
+ssh atamm2@eddie3.ecdf.ed.ac.uk
+
+# Log in to the staging node
+qlogin -q staging -l h='node2c11'
+
+# Set the permission of all files to be copied back (in the "out" folder) to "read, write, execute". 
+# This is to avoid potential file access issues later:
+cd /exports/eddie/scratch/atamm2/emotion
+chmod 777 -R -v out
+
+# Connect to DataStore from the cluster using sftp and port 22222:
+sftp -P 22222 atamm2@chss.datastore.ed.ac.uk
+
+# Set paths to your study folder on the cluster (a "local" folder), and to your study folder on DataStore (a "remote" folder)
+lcd /exports/eddie/scratch/atamm2/emotion/out/fmriprep
+lls
+cd /chss/datastore/chss/groups/hsscollege-shared/ppls/morcom02/E123456_Emotion/derivatives
+ls
+put -R *
+
+# Also copy fmriprep log files
+lcd /exports/eddie/scratch/atamm2/emotion/
+lls
+cd /chss/datastore/chss/groups/hsscollege-shared/ppls/morcom02/E123456_Emotion/derivatives
+ls
+put -R fmriprep_sub*
+
+# You can use the same method to copy folders of individual subjects:
+lcd /exports/eddie/scratch/atamm2/emotion/out/fmriprep
+lls
+cd /chss/datastore/chss/groups/hsscollege-shared/ppls/morcom02/E123456_Emotion/derivatives
+ls
+put -R sub-01
+put -R sub-02
+
+# Exit sftp and the staging node
+exit
+exit
