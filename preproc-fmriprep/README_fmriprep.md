@@ -86,7 +86,7 @@ These are notes for running the [fMRIPrep](https://doi.org/10.1038/s41592-018-02
   * Submitting a single job script for multiple participants and specifying participant labels using the "--participant-label" argument in the fMRIPrep command. The processing of these participants is parallelised to some degree, but it seems much slower.
   * Submitting a single job script for multiple participants that contains a parallel for-loop over participant labels, such that multiple fMRIPrep commands are run in parallel (one per participant). Using this strategy led to memory issues on the cluster even if I tried to limit the memory that each fMRIPrep process can use.
   
-* The easiest way to submit a separate job script for each participant is to use an [array job](https://www.wiki.ed.ac.uk/display/ResearchServices/Array+Jobs). This means that the same script is submitted to the cluster multiple times, but the environment variable "SGE_TASK_ID" is different each time. For example, if your job submission command starts with `qsub -t 1-5`, then "SGE_TASK_ID" takes values 1, 2, 3, 4, and 5 at each submission of the script, running it for subjects 1 to 5.
+* The easiest way to submit a separate job script for each participant is to use an [array job](https://www.wiki.ed.ac.uk/display/ResearchServices/Array+Jobs). This means that the same script is automatically submitted to the cluster multiple times, but the environment variable "SGE_TASK_ID" is different each time. For example, if your job submission command starts with `qsub -t 1-5`, then "SGE_TASK_ID" takes values 1, 2, 3, 4, and 5 at each submission of the script, running it for subjects 1 to 5.
 
 * An alternative, more tedious way is to manually submit a separate ".sh" script for each subject.
 
