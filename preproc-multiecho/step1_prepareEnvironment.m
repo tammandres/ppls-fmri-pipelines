@@ -63,7 +63,8 @@ S.code_path_local = 'Z:\[localStudyFolder]\code';
 %  mode = 'subset' : to run the script for a subset of subjects
 %
 %  If you choose mode = 'subset', you must specify the IDs of subjects in a
-%  'subs' variable. It must be a column cell of strings. For example:
+%  'subs' variable. It must be a column cell of strings (not a row vector). 
+%  Use the ';' character after each element to ensure it is a column. For example:
 %  subs = {'sub-01'; 'sub-02'; 'sub-10'};
 %  Note that if mode = 'all', subs variable will be ignored
 S.mode = 'all';
